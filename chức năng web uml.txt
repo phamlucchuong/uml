@@ -1,0 +1,45 @@
+chức năng web uml:
+
+1. admin:
+	Quản lý tài khoản (giảng viên, sinh viên)
+
+	Quản lý danh sách doanh nghiệp, đơn vị thực tập
+
+	Quản lý đề tài/thông tin thực tập
+
+	Phân công thực tập (ghép sinh viên với đơn vị/giảng viên)
+
+	Theo dõi tình trạng thực tập
+
+	Phân quyền người dung
+
+2. giảng viên:
+	Xem danh sách sinh viên mình phụ trách
+
+	Duyệt kế hoạch/thời gian biểu thực tập của sinh viên
+
+	Đánh giá, chấm điểm thực tập
+
+	Gửi nhận xét, báo cáo hướng dẫn
+
+3. sinh viên:
+	Cập nhật hồ sơ cá nhân
+
+	Đăng ký nguyện vọng thực tập (địa điểm, lĩnh vực)
+
+	Xem thông tin phân công thực tập
+
+	Nộp báo cáo thực tập
+
+	Xem đánh giá của giảng viên
+
+	Trao đổi với giảng viên (chat/mail nội bộ)
+
+4. doanh nghiệp: 
+	Quản lý thông tin doanh nghiệp
+
+Đăng thông báo tuyển sinh viên thực tập (nếu cần)
+
+Xác nhận tiếp nhận sinh viên
+
+Đánh giá sinh viên thực tập (tuỳ yêu cầu)

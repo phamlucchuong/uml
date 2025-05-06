@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Đăng ký</title>
+  <!---Custom CSS File--->
+  <link rel="stylesheet" href="/css/dangKy.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="registration form">
+      <header>Đăng ký</header>
+      <div class="phanQuyen">
+        <input onclick="phanQuyen(1)" type="button" value="Sinh viên" class="active" id="btnSinhVien">
+        <input onclick="phanQuyen(2)" type="button" value="Doanh nghiệp" id="btnDoanhNghiep">
+      </div>
+
+      <form onsubmit="dangKy(event)" action="#">
+        <!-- form đăng nhập sinh viên -->
+        <div class="dangKy--sinhVien form-group">
+          <input type="text" placeholder="Họ và tên">
+          <input type="text" placeholder="Mã số sinh viên">
+          <input type="text" placeholder="Trường">
+          <input type="text" placeholder="Email">
+          <input type="text" placeholder="Tên đăng nhập">
+          <input type="password" placeholder="Mật khẩu">
+          <input type="password" placeholder="Xác nhận mật khẩu">
+        </div>
+
+        <div class="dangKy--doanhNghiep form-group">
+          <input type="text" placeholder="Tên công ty">
+          <input type="text" placeholder="Tên đăng nhập">
+          <input type="text" placeholder="Email">
+          <input type="password" placeholder="Mật khẩu">
+          <input type="password" placeholder="Xác nhận mật khẩu">
+        </div>
+
+        <input type="submit" class="button" value="Đăng ký">
+      </form>
+
+
+      <div class="signup">
+        <span class="signup">Đã có tài khoản?
+          <a href="/dangNhap" for="check">Đăng nhập</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <script src="/js/taiKhoan.js"></script>
+</body>
+
+</html>

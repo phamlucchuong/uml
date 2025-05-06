@@ -1,0 +1,93 @@
+-- Bảng TaiKhoan: Quản lý thông tin tài khoản và vai trò
+CREATE TABLE TaiKhoan (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    tenDangNhap NVARCHAR(25) UNIQUE NOT NULL,
+    matKhau NVARCHAR(25) NOT NULL,
+    vaiTro NVARCHAR(20) NOT NULL CHECK (vaiTro IN ('SinhVien', 'DoanhNghiep', 'Admin')) -- Vai trò: SinhVien, DoanhNghiep, Admin (dự phòng mở rộng),
+	trang_thai bool
+);
+
+-- Bảng SinhVien: Lưu thông tin sinh viên
+CREATE TABLE SinhVien (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    taiKhoanId INT UNIQUE NOT NULL, -- Liên kết với TaiKhoan
+    hoTen NVARCHAR(100) NOT NULL,
+    mssv NVARCHAR(20) UNIQUE NOT NULL,
+    truong NVARCHAR(50) NOT NULL,
+    email NVARCHAR(100) UNIQUE NOT NULL,
+    nguyenVong NVARCHAR(255),
+    FOREIGN KEY (taiKhoanId) REFERENCES TaiKhoan(id)
+);
+
+-- Bảng DoanhNghiep: Lưu thông tin doanh nghiệp
+CREATE TABLE DoanhNghiep (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    taiKhoanId INT UNIQUE NOT NULL, -- Liên kết với TaiKhoan
+    tenDN NVARCHAR(100) NOT NULL,
+    linhVuc NVARCHAR(100) NOT NULL,
+    email NVARCHAR(100) UNIQUE NOT NULL,
+    moTa NVARCHAR(500), -- Mô tả doanh nghiệp
+    FOREIGN KEY (taiKhoanId) REFERENCES TaiKhoan(id)
+);
+
+-- Bảng UngTuyen: Quản lý yêu cầu ứng tuyển của sinh viên
+CREATE TABLE UngTuyen (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    sinhVienId INT NOT NULL,
+    doanhNghiepId INT NOT NULL,
+    cvFile NVARCHAR(255) NOT NULL, -- Đường dẫn đến file CV
+    trangThai NVARCHAR(50) NOT NULL CHECK (trangThai IN ('Pending', 'Approved', 'Rejected')), -- Trạng thái ứng tuyển
+    ngayNop DATE NOT NULL,
+    FOREIGN KEY (sinhVienId) REFERENCES SinhVien(id),
+    FOREIGN KEY (doanhNghiepId) REFERENCES DoanhNghiep(id)
+);
+
+-- Bảng ThucTap: Quản lý khóa thực tập
+CREATE TABLE ThucTap (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    sinhVienId INT NOT NULL,
+    doanhNghiepId INT NOT NULL,
+    ngayBatDau DATE NOT NULL,
+    ngayKetThuc DATE NOT NULL,
+    trangThai NVARCHAR(50) NOT NULL CHECK (trangThai IN ('Ongoing', 'Completed', 'Cancelled')), -- Trạng thái thực tập
+    CONSTRAINT CHK_ThucTap_Duration CHECK (DATEDIFF(MONTH, ngayBatDau, ngayKetThuc) = 3), -- Đảm bảo thời gian thực tập là 3 tháng
+    FOREIGN KEY (sinhVienId) REFERENCES SinhVien(id),
+    FOREIGN KEY (doanhNghiepId) REFERENCES DoanhNghiep(id)
+);
+
+-- Bảng BaoCao: Lưu báo cáo thực tập của sinh viên
+CREATE TABLE BaoCao (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    sinhVienId INT NOT NULL,
+    thucTapId INT NOT NULL,
+    tieuDe NVARCHAR(200) NOT NULL,
+    noiDung NVARCHAR(MAX),
+    tepFile NVARCHAR(255), -- File báo cáo
+    ngayNop DATE NOT NULL,
+    FOREIGN KEY (sinhVienId) REFERENCES SinhVien(id),
+    FOREIGN KEY (thucTapId) REFERENCES ThucTap(id)
+);
+
+-- Bảng DanhGia: Lưu đánh giá từ doanh nghiệp
+CREATE TABLE DanhGia (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    sinhVienId INT NOT NULL,
+    thucTapId INT NOT NULL,
+    doanhNghiepId INT NOT NULL,
+    diem FLOAT CHECK (diem >= 0 AND diem <= 10), -- Điểm từ 0 đến 10
+    nhanXet NVARCHAR(MAX),
+    ngayDanhGia DATE NOT NULL,
+    FOREIGN KEY (sinhVienId) REFERENCES SinhVien(id),
+    FOREIGN KEY (thucTapId) REFERENCES ThucTap(id),
+    FOREIGN KEY (doanhNghiepId) REFERENCES DoanhNghiep(id)
+);
+
+
+
+
+drop table [dbo].[bao_cao];
+drop table [dbo].[danh_gia];
+drop table [dbo].[ung_tuyen];
+drop table [dbo].[sinh_vien];
+drop table [dbo].[doanh_nghiep];
+drop table tai_khoan;
